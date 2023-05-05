@@ -5,7 +5,7 @@ import (
 )
 
 func TestArray_New(t *testing.T) {
-	arr := NewArray[int]()
+	arr := New[int]()
 	if arr.length != 0 {
 		t.FailNow()
 	}
@@ -13,12 +13,12 @@ func TestArray_New(t *testing.T) {
 
 func BenchmarkArray_New(b *testing.B) {
 	for n := 0; n < b.N; n++ {
-		NewArray[int]()
+		New[int]()
 	}
 }
 
 func TestArray_Push(t *testing.T) {
-	arr := NewArray[int]()
+	arr := New[int]()
 	for i := 0; i < 10; i++ {
 		n := arr.Push(i)
 		if n != i+1 {
@@ -28,14 +28,14 @@ func TestArray_Push(t *testing.T) {
 }
 
 func BenchmarkArray_Push(b *testing.B) {
-	arr := NewArray[int]()
+	arr := New[int]()
 	for n := 0; n < b.N; n++ {
 		arr.Push(n)
 	}
 }
 
 func TestArray_Pop(t *testing.T) {
-	arr := NewArray[int]()
+	arr := New[int]()
 	for i := 0; i < 10; i++ {
 		arr.Push(i)
 	}
@@ -46,7 +46,7 @@ func TestArray_Pop(t *testing.T) {
 }
 
 func TestArray_Delete(t *testing.T) {
-	arr := NewArray[int]()
+	arr := New[int]()
 	for i := 0; i < 10; i++ {
 		arr.Push(i)
 	}
@@ -58,7 +58,7 @@ func TestArray_Delete(t *testing.T) {
 }
 
 func BenchmarkArray_Delete(b *testing.B) {
-	arr := NewArray[int]()
+	arr := New[int]()
 	for n := 0; n < b.N; n++ {
 		arr.Push(1)
 		arr.Delete(0)
@@ -66,7 +66,7 @@ func BenchmarkArray_Delete(b *testing.B) {
 }
 
 func TestArray_Reverse(t *testing.T) {
-	arr := NewArray[int]()
+	arr := New[int]()
 	for i := 0; i < 10; i++ {
 		arr.Push(i)
 	}
@@ -77,7 +77,7 @@ func TestArray_Reverse(t *testing.T) {
 }
 
 func BenchmarkArray_Reverse(b *testing.B) {
-	arr := NewArray[int]()
+	arr := New[int]()
 	for i := 0; i < 10; i++ {
 		arr.Push(i)
 	}
