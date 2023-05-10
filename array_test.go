@@ -69,7 +69,7 @@ func TestArray_4(t *testing.T) {
 	if value != 1 {
 		t.FailNow()
 	}
-	count := arr.Count()
+	count := arr.Length()
 	if count != 0 {
 		t.FailNow()
 	}
