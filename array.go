@@ -13,8 +13,8 @@ func New[T any]() *Array[T] {
 	}
 }
 
-// Count returns the number of values in the array.
-func (arr *Array[T]) Count() int {
+// Length returns the number of values in the array.
+func (arr *Array[T]) Length() int {
 	return arr.length
 }
 
