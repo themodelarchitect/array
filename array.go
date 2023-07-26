@@ -6,8 +6,8 @@ type Array[T any] struct {
 }
 
 // New creates a new array.
-func New[T any]() *Array[T] {
-	return &Array[T]{
+func New[T any]() Array[T] {
+	return Array[T]{
 		length: 0,
 		values: make([]T, 0),
 	}
