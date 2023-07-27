@@ -80,3 +80,26 @@ func (arr *Array[T]) Reverse() {
 	}
 	arr.values = array
 }
+
+// Copy the values into a new array.
+func (arr *Array[T]) Copy() Array[T] {
+	copyOfArray := New[T]()
+	for i := 0; i < arr.Length(); i++ {
+		value := arr.Lookup(i)
+		copyOfArray.Push(value)
+	}
+	return copyOfArray
+}
+
+func (arr *Array[T]) ForEach(fn func(T)) {
+	for i := 0; i < arr.Length(); i++ {
+		fn(arr.values[i])
+	}
+}
+
+// Clear all the values in the array.
+func (arr *Array[T]) Clear() {
+	for i := arr.Length(); i > 0; i-- {
+		arr.Delete(i)
+	}
+}

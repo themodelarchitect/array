@@ -1,6 +1,7 @@
 package array
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -75,9 +76,52 @@ func TestArray_4(t *testing.T) {
 	}
 }
 
+func TestArray_Copy(t *testing.T) {
+	arr := New[int]()
+	arr.Push(1)
+	arr.Push(2)
+	arr.Push(3)
+	arrCopy := arr.Copy()
+
+	arr.ForEach(func(i int) {
+		fmt.Println(i)
+	})
+
+	arrCopy.ForEach(func(i int) {
+		fmt.Println(i)
+	})
+}
+
+func TestArray_Clear(t *testing.T) {
+	arr := New[int]()
+	for i := 0; i < 10; i++ {
+		arr.Push(i)
+	}
+
+	if arr.Length() != 10 {
+		t.FailNow()
+	}
+
+	arr.Clear()
+
+	if arr.Length() > 0 {
+		t.FailNow()
+	}
+}
+
 func BenchmarkArray_Push(b *testing.B) {
 	arr := New[int]()
 	for n := 0; n < b.N; n++ {
 		arr.Push(n)
+	}
+}
+
+func BenchmarkArray_Copy(b *testing.B) {
+	arr := New[int]()
+	arr.Push(1)
+	arr.Push(2)
+	arr.Push(3)
+	for n := 0; n < b.N; n++ {
+		arr.Copy()
 	}
 }
