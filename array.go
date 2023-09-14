@@ -91,6 +91,14 @@ func (arr *Array[T]) Copy() Array[T] {
 	return copyOfArray
 }
 
+func (arr *Array[T]) Merge(items Array[T]) Array[T] {
+	mergedArray := arr.Copy()
+	for i := 0; i < items.length; i++ {
+		mergedArray.Push(items.Lookup(i))
+	}
+	return mergedArray
+}
+
 func (arr *Array[T]) ForEach(fn func(T)) {
 	for i := 0; i < arr.Length(); i++ {
 		fn(arr.values[i])

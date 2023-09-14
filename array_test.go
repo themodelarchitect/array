@@ -1,7 +1,6 @@
 package array
 
 import (
-	"fmt"
 	"testing"
 )
 
@@ -30,6 +29,28 @@ func TestArray_2(t *testing.T) {
 	for i := 0; i < 3; i++ {
 		val := arr.Lookup(i)
 		if val != expected[i] {
+			t.FailNow()
+		}
+	}
+}
+
+func TestArray_Merge(t *testing.T) {
+	arr1 := New[int]()
+	arr2 := New[int]()
+
+	arr1.Push(1)
+	arr1.Push(2)
+	arr1.Push(3)
+
+	arr2.Push(4)
+	arr2.Push(5)
+	arr2.Push(6)
+
+	mergedArray := arr1.Merge(arr2)
+
+	for i := 0; i < 6; i++ {
+		n := mergedArray.Lookup(i)
+		if n != i+1 {
 			t.FailNow()
 		}
 	}
@@ -83,13 +104,13 @@ func TestArray_Copy(t *testing.T) {
 	arr.Push(3)
 	arrCopy := arr.Copy()
 
-	arr.ForEach(func(i int) {
-		fmt.Println(i)
-	})
-
-	arrCopy.ForEach(func(i int) {
-		fmt.Println(i)
-	})
+	for i := 1; i < 3; i++ {
+		x := arr.Lookup(i)
+		y := arrCopy.Lookup(i)
+		if x != y {
+			t.FailNow()
+		}
+	}
 }
 
 func TestArray_Clear(t *testing.T) {
