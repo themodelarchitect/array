@@ -1,6 +1,7 @@
 package array
 
 import (
+	"log"
 	"testing"
 )
 
@@ -50,6 +51,7 @@ func TestArray_Merge(t *testing.T) {
 
 	for i := 0; i < 6; i++ {
 		n := mergedArray.Lookup(i)
+		t.Log(n)
 		if n != i+1 {
 			t.FailNow()
 		}
@@ -104,13 +106,52 @@ func TestArray_Copy(t *testing.T) {
 	arr.Push(3)
 	arrCopy := arr.Copy()
 
-	for i := 1; i < 3; i++ {
+	for i := 0; i < 3; i++ {
 		x := arr.Lookup(i)
 		y := arrCopy.Lookup(i)
+		log.Println(x, y)
 		if x != y {
 			t.FailNow()
 		}
 	}
+}
+
+func TestArray_Copy2(t *testing.T) {
+	arr := New[int]()
+	arr.Push(1)
+	arr.Push(2)
+	arr.Push(3)
+	arrCopy := arr.Copy()
+
+	for i := 0; i < arr.length; i++ {
+		arrCopy.Set(i, i+3)
+	}
+
+	for i := 0; i < arr.length; i++ {
+		x := arr.Lookup(i)
+		y := arrCopy.Lookup(i)
+		log.Println(x, y)
+	}
+}
+
+func TestArray_Set(t *testing.T) {
+	arr := New[int]()
+	arr.Push(1)
+	arr.Push(2)
+	arr.Push(3)
+
+	arr.Set(0, 4)
+	arr.Set(1, 5)
+	arr.Set(2, 6)
+
+	for i := 0; i < 3; i++ {
+		x := arr.Lookup(i)
+		log.Println(x)
+		if x != (i + 4) {
+			t.FailNow()
+		}
+	}
+
 }
 
 func TestArray_Clear(t *testing.T) {

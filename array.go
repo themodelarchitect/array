@@ -1,5 +1,9 @@
 package array
 
+import (
+	"log"
+)
+
 type Array[T any] struct {
 	length int
 	values []T
@@ -27,6 +31,15 @@ func (arr *Array[T]) Lookup(index int) T {
 		value = arr.values[index]
 	}
 	return value
+}
+
+func (arr *Array[T]) Set(index int, value T) {
+	if index < 0 || index > arr.length {
+		log.Printf("index out of range: %d\n", index)
+		return
+	} else {
+		arr.values[index] = value
+	}
 }
 
 // Push adds an item to the end of the array and returns the length of the array.
@@ -97,12 +110,6 @@ func (arr *Array[T]) Merge(items Array[T]) Array[T] {
 		mergedArray.Push(items.Lookup(i))
 	}
 	return mergedArray
-}
-
-func (arr *Array[T]) ForEach(fn func(T)) {
-	for i := 0; i < arr.Length(); i++ {
-		fn(arr.values[i])
-	}
 }
 
 // Clear all the values in the array.
