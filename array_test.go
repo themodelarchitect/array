@@ -1,6 +1,7 @@
 package array
 
 import (
+	"fmt"
 	"github.com/google/uuid"
 	"log"
 	"testing"
@@ -195,6 +196,102 @@ func TestArray_Copy3(t *testing.T) {
 
 	for i := 0; i < arrCopy.Length(); i++ {
 		log.Println(arrCopy.Lookup(i).Id, arrCopy.Lookup(i).Name, arrCopy.Lookup(i).Number)
+	}
+}
+
+func setItem(items Array[item]) {
+	for i := 0; i < items.Length(); i++ {
+		item := items.Lookup(i)
+		item.Id = uuid.New()
+		item.Name = fmt.Sprintf("setting %d", i)
+		item.Number = i + 3
+		items.Set(i, item)
+	}
+}
+
+func setItemPointer(items Array[*item]) {
+	for i := 0; i < items.Length(); i++ {
+		item := items.Lookup(i)
+		item.Id = uuid.New()
+		item.Name = fmt.Sprintf("setting %d", i)
+		item.Number = i + 3
+		items.Set(i, item)
+	}
+}
+
+func TestArray_Copy4(t *testing.T) {
+	arr := New[item]()
+
+	item1 := item{
+		Id:     uuid.New(),
+		Name:   "original 1",
+		Number: 1,
+	}
+
+	item2 := item{
+		Id:     uuid.New(),
+		Name:   "original 2",
+		Number: 2,
+	}
+
+	item3 := item{
+		Id:     uuid.New(),
+		Name:   "original 3",
+		Number: 3,
+	}
+
+	arr.Push(item1)
+	arr.Push(item2)
+	arr.Push(item3)
+
+	arrCopy := arr.Copy()
+
+	for i := 0; i < 3; i++ {
+		setItem(arrCopy)
+	}
+
+	arr = arr.Merge(arrCopy)
+
+	for i := 0; i < arr.Length(); i++ {
+		log.Println(arr.Lookup(i).Id, arr.Lookup(i).Name, arr.Lookup(i).Number)
+	}
+}
+
+func TestArray_Copy5(t *testing.T) {
+	arr := New[*item]()
+
+	item1 := &item{
+		Id:     uuid.New(),
+		Name:   "original 1",
+		Number: 1,
+	}
+
+	item2 := &item{
+		Id:     uuid.New(),
+		Name:   "original 2",
+		Number: 2,
+	}
+
+	item3 := &item{
+		Id:     uuid.New(),
+		Name:   "original 3",
+		Number: 3,
+	}
+
+	arr.Push(item1)
+	arr.Push(item2)
+	arr.Push(item3)
+
+	arrCopy := arr.Copy()
+
+	for i := 0; i < 3; i++ {
+		setItemPointer(arrCopy)
+	}
+
+	arr = arr.Merge(arrCopy)
+
+	for i := 0; i < arr.Length(); i++ {
+		log.Println(arr.Lookup(i).Id, arr.Lookup(i).Name, arr.Lookup(i).Number)
 	}
 }
 
