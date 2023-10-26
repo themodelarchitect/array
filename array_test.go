@@ -1,9 +1,16 @@
 package array
 
 import (
+	"github.com/google/uuid"
 	"log"
 	"testing"
 )
+
+type item struct {
+	Id     uuid.UUID
+	Name   string
+	Number int
+}
 
 func TestArray_1(t *testing.T) {
 	arr := New[int]()
@@ -131,6 +138,63 @@ func TestArray_Copy2(t *testing.T) {
 		x := arr.Lookup(i)
 		y := arrCopy.Lookup(i)
 		log.Println(x, y)
+	}
+}
+
+func TestArray_Copy3(t *testing.T) {
+	arr := New[item]()
+
+	item1 := item{
+		Id:     uuid.New(),
+		Name:   "original 1",
+		Number: 1,
+	}
+
+	item2 := item{
+		Id:     uuid.New(),
+		Name:   "original 2",
+		Number: 2,
+	}
+
+	item3 := item{
+		Id:     uuid.New(),
+		Name:   "original 3",
+		Number: 3,
+	}
+
+	arr.Push(item1)
+	arr.Push(item2)
+	arr.Push(item3)
+
+	arrCopy := arr.Copy()
+
+	copy1 := arrCopy.Lookup(0)
+	copy2 := arrCopy.Lookup(1)
+	copy3 := arrCopy.Lookup(2)
+
+	copy1.Id = uuid.New()
+	copy1.Name = "copy 1"
+	copy1.Number = 4
+
+	copy2.Id = uuid.New()
+	copy2.Name = "copy 2"
+	copy2.Number = 5
+
+	copy3.Id = uuid.New()
+	copy3.Name = "copy 3"
+	copy3.Number = 6
+
+	// need to set to update the array
+	arrCopy.Set(0, copy1)
+	arrCopy.Set(1, copy2)
+	arrCopy.Set(2, copy3)
+
+	for i := 0; i < arr.Length(); i++ {
+		log.Println(arr.Lookup(i).Id, arr.Lookup(i).Name, arr.Lookup(i).Number)
+	}
+
+	for i := 0; i < arrCopy.Length(); i++ {
+		log.Println(arrCopy.Lookup(i).Id, arrCopy.Lookup(i).Name, arrCopy.Lookup(i).Number)
 	}
 }
 
