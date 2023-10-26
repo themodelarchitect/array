@@ -14,7 +14,7 @@ type item struct {
 }
 
 func TestArray_Push(t *testing.T) {
-	var arr Array[int]
+	arr := New[int]()
 	arr.Push(1)
 	arr.Push(2)
 	arr.Push(3)
@@ -24,8 +24,7 @@ func TestArray_Push(t *testing.T) {
 }
 
 func TestArray_1(t *testing.T) {
-	//arr := New[int]()
-	var arr Array[int]
+	arr := New[int]()
 	arr.Push(1)
 	arr.Push(2)
 	arr.Push(3)
