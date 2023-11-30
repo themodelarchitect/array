@@ -1,6 +1,7 @@
 package array
 
 import (
+	"encoding/json"
 	"log"
 )
 
@@ -117,4 +118,13 @@ func (arr *Array[T]) Clear() {
 	for i := arr.Length(); i > 0; i-- {
 		arr.Delete(i)
 	}
+}
+
+func (arr *Array[T]) MarshalJSON() ([]byte, error) {
+	values := make([]T, 0)
+	for i := 0; i < arr.Length(); i++ {
+		val := arr.Lookup(i)
+		values = append(values, val)
+	}
+	return json.Marshal(values)
 }
