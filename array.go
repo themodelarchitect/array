@@ -18,6 +18,28 @@ func New[T any]() *Array[T] {
 	}
 }
 
+func (arr *Array[T]) UnmarshalJSON(b []byte) error {
+	var values []T
+	if err := json.Unmarshal(b, &values); err != nil {
+		return err
+	}
+
+	arr.length = len(values)
+	arr.values = values
+
+	return nil
+}
+
+func (arr *Array[T]) MarshalJSON() ([]byte, error) {
+	return json.Marshal(arr.values)
+}
+
+func (arr *Array[T]) Values() []T {
+	var values []T
+	values = arr.values
+	return values
+}
+
 // Length returns the number of values in the array.
 func (arr *Array[T]) Length() int {
 	return arr.length
@@ -118,13 +140,4 @@ func (arr *Array[T]) Clear() {
 	for i := arr.Length(); i > 0; i-- {
 		arr.Delete(i)
 	}
-}
-
-func (arr *Array[T]) MarshalJSON() ([]byte, error) {
-	values := make([]T, 0)
-	for i := 0; i < arr.Length(); i++ {
-		val := arr.Lookup(i)
-		values = append(values, val)
-	}
-	return json.Marshal(values)
 }
