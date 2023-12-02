@@ -1,7 +1,6 @@
 package array
 
 import (
-	"encoding/json"
 	"fmt"
 	"github.com/google/uuid"
 	"log"
@@ -293,19 +292,6 @@ func TestArray_Clear(t *testing.T) {
 	if arr.Length() > 0 {
 		t.FailNow()
 	}
-}
-
-func TestArray_JSON(t *testing.T) {
-	arr := New[int]()
-	for i := 0; i < 10; i++ {
-		arr.Push(i)
-	}
-	data, err := json.MarshalIndent(arr, "", "    ")
-	if err != nil {
-		log.Println(err)
-		t.Fail()
-	}
-	log.Println(string(data))
 }
 
 func BenchmarkArray_Push(b *testing.B) {
